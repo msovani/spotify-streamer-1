@@ -32,9 +32,9 @@ public class MainActivity extends ActionBarActivity {
 
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.fragment_artist_list, artistFragment, "ARTIST_FRAGMENT_TAG")
-                    .disallowAddToBackStack()
+                    .add(R.id.fragment_container, artistFragment, "ARTIST_FRAGMENT_TAG")
                     .commit();
+
         }else{
 
             artistFragment = (ArtistFragment) getSupportFragmentManager().findFragmentByTag("ARTIST_FRAGMENT_TAG");
@@ -42,7 +42,6 @@ public class MainActivity extends ActionBarActivity {
             searchTerm = savedInstanceState.getString("SEARCH_TERM");
             if (searchTerm != null) {
                 artistName.setText(searchTerm);
-                artistFragment.getArtists(searchTerm);
             }
 
         }

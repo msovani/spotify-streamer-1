@@ -12,12 +12,20 @@
         android:inputType="textCapWords"
         android:imeOptions="actionDone"
         android:hint="@string/artist_name_placeholder" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/artist_name"
+        android:id="@+id/fragment_container"
+        >
+
+
     <fragment
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:name="com.sovani.spotifystreamer.ArtistFragment"
         tools:layout="@layout/fragment_artist"
-        android:layout_below="@+id/artist_name"
         android:id="@+id/fragment_artist_list"/>
+    </RelativeLayout>
 
 </RelativeLayout>

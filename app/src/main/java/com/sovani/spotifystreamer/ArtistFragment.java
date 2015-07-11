@@ -15,8 +15,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.sovani.spotifystreamer.CentralReader.CentralAPIManager;
+import com.sovani.spotifystreamer.model.ParcelableArtist;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import kaaes.spotify.webapi.android.models.Artist;
@@ -26,7 +28,7 @@ import kaaes.spotify.webapi.android.models.Image;
 
 public class ArtistFragment extends Fragment  {
 
-    private List<Artist> artistList;
+    private ArrayList<ParcelableArtist> artistList;
     private ArtistAdapter adapter;
     private TextView searchDisplay;
     RetrieveCentralFeed rcf;
@@ -37,17 +39,21 @@ public class ArtistFragment extends Fragment  {
         View fragmentView = inflater.inflate(R.layout.fragment_artist, container, false);
         searchDisplay = (TextView) fragmentView.findViewById(R.id.search_message);
 
+        if ((savedInstance != null ) && (savedInstance.containsKey("ARTIST_LIST"))){
+            artistList = savedInstance.getParcelableArrayList("ARTIST_LIST");
+        }
+
         ListView artistListView = (ListView) fragmentView.findViewById(R.id.artist_list);
         adapter = new ArtistAdapter();
         artistListView.setAdapter(adapter);
         artistListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Artist artist = adapter.getItem(position);
+                ParcelableArtist artist = adapter.getItem(position);
                 Log.d("ClickHandler", adapter.getItem(position).toString());
                 Intent topTenIntent = new Intent(getActivity(), TopTenActivity.class);
-                topTenIntent.putExtra("SPOTIFY_ID", artist.id);
-                topTenIntent.putExtra("ARTIST_NAME", artist.name);
+                topTenIntent.putExtra("SPOTIFY_ID", artist.getId());
+                topTenIntent.putExtra("ARTIST_NAME", artist.getArtistName());
                 getActivity().startActivity(topTenIntent);
             }
         });
@@ -55,7 +61,12 @@ public class ArtistFragment extends Fragment  {
         return fragmentView;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("ARTIST_LIST", artistList);
 
+    }
 
     public void getArtists(String artistName)
     {
@@ -92,14 +103,14 @@ public class ArtistFragment extends Fragment  {
         }
 
         @Override
-        public Artist getItem(int position) {
+        public ParcelableArtist getItem(int position) {
             return artistList.get(position);
         }
 
 
         @Override
         public long getItemId(int position) {
-            return artistList.get(position).id.hashCode();
+            return artistList.get(position).getId().hashCode();
         }
 
         @Override
@@ -107,16 +118,14 @@ public class ArtistFragment extends Fragment  {
             View rootView = getActivity().getLayoutInflater().inflate(R.layout.layout_album, null);
             TextView artisteName = (TextView) rootView.findViewById(R.id.frame_artist_name);
 
-            Artist artist = getItem(position);
-            artisteName.setText(artist.name);
+            ParcelableArtist artist = getItem(position);
+            artisteName.setText(artist.getArtistName());
 
             ImageView albumCover = (ImageView) rootView.findViewById(R.id.frame_album_cover);
 
-            if (artist.images.size()>0) {
-                Image image = artist.images.get(0);
-                String url = image.url;
+            if (artist.getUrl().length()>0) {
 
-                Picasso.with(getActivity()).load(url).placeholder(R.drawable.spotify_placeholder).into(albumCover);
+                Picasso.with(getActivity()).load(artist.getUrl()).placeholder(R.drawable.spotify_placeholder).into(albumCover);
             }else{
                 Picasso.with(getActivity()).load(R.drawable.spotify_placeholder).into(albumCover);
             }
@@ -143,7 +152,25 @@ public class ArtistFragment extends Fragment  {
         protected void onPostExecute(ArtistsPager pager)
         {
             if (pager!= null) {
-                artistList = pager.artists.items;
+                if (artistList == null)
+                {
+                    artistList = new ArrayList<>();
+                }
+                    artistList.clear();
+
+                for (Artist artist : pager.artists.items)
+                {
+                    String url = null;
+                    if (artist.images.size()>0)
+                    {
+                        Image image = artist.images.get(0);
+                        url = image.url;
+                    }else {
+                        url = "";
+                    }
+                    ParcelableArtist pArtist = new ParcelableArtist(artist.name, url, artist.id);
+                    artistList.add(pArtist);
+                }
             }
 
             if ((pager == null) || (pager.artists.items.size()==0))
