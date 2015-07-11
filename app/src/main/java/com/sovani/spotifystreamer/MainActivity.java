@@ -1,18 +1,12 @@
 package com.sovani.spotifystreamer;
 
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-
-import android.support.v4.app.FragmentActivity;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -24,7 +18,6 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         artistName = (EditText) findViewById(R.id.artist_name);
-        String searchTerm = null;
         if (savedInstanceState==null)
         {
 
@@ -39,7 +32,7 @@ public class MainActivity extends ActionBarActivity {
 
             artistFragment = (ArtistFragment) getSupportFragmentManager().findFragmentByTag("ARTIST_FRAGMENT_TAG");
 
-            searchTerm = savedInstanceState.getString("SEARCH_TERM");
+            String searchTerm = savedInstanceState.getString("SEARCH_TERM");
             if (searchTerm != null) {
                 artistName.setText(searchTerm);
             }

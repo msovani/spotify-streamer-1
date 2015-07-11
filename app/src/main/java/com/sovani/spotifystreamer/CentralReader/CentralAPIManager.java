@@ -1,11 +1,9 @@
 package com.sovani.spotifystreamer.CentralReader;
-import android.support.annotation.NonNull;
+
 import android.util.Log;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;

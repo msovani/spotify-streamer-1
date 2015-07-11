@@ -19,7 +19,6 @@ import com.sovani.spotifystreamer.model.ParcelableArtist;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import kaaes.spotify.webapi.android.models.Artist;
 import kaaes.spotify.webapi.android.models.ArtistsPager;
