@@ -16,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sovani.spotifystreamer.CentralReader.CentralAPIManager;
 import com.sovani.spotifystreamer.model.ParcelableArtist;
@@ -70,6 +71,7 @@ public class ArtistFragment extends Fragment  {
                     rt.execute(artist);
                 }else{
                     searchDisplay.setText(getResources().getText(R.string.error_no_network));
+                    showToast(getResources().getText(R.string.error_no_network).toString());
                 }
 
             }
@@ -104,6 +106,8 @@ public class ArtistFragment extends Fragment  {
             }
         }else{
             searchDisplay.setText(getResources().getText(R.string.error_no_network));
+            showToast(getResources().getString(R.string.error_no_network));
+
 
         }
     }
@@ -232,6 +236,7 @@ public class ArtistFragment extends Fragment  {
             {
                 //We do not have any tracks, we need to show message and exit.
                 searchDisplay.setText(getResources().getText(R.string.error_no_tracks));
+                showToast(getResources().getString(R.string.error_no_tracks));
                 return;
             }
 
@@ -274,6 +279,12 @@ public class ArtistFragment extends Fragment  {
                 (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+    private void showToast(String message)
+    {
+        Toast.makeText(getActivity().getApplicationContext(), message,
+                Toast.LENGTH_SHORT).show();
     }
 
 
