@@ -16,7 +16,7 @@ import retrofit.RetrofitError;
  * to serve api requests from different areas of code.
  */
 public class CentralAPIManager {
-    public static  SpotifyService getService()
+    private static  SpotifyService getService()
     {
         SpotifyApi api = new SpotifyApi();
         return api.getService();

@@ -6,33 +6,21 @@ import android.os.Parcelable;
 
 
 public class ParcelableTrack implements Parcelable{
-    private String albumName;
-    private String trackName;
-    private String url;
-    private String id;
+    private final String albumName;
+    private final String trackName;
+    private final String url;
+    private final String id;
 
     public String getAlbumName() {
         return albumName;
-    }
-
-    public void setAlbumName(String albumName) {
-        this.albumName = albumName;
     }
 
     public String getTrackName() {
         return trackName;
     }
 
-    public void setTrackName(String trackName) {
-        this.trackName = trackName;
-    }
-
     public String getUrl() {
         return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public ParcelableTrack(String vName, String vNumber, String imageurl, String idnumber)
@@ -70,7 +58,7 @@ public class ParcelableTrack implements Parcelable{
         parcel.writeString(id);
     }
 
-    public final Parcelable.Creator<ParcelableTrack> CREATOR = new Parcelable.Creator<ParcelableTrack>() {
+    public static final Parcelable.Creator<ParcelableTrack> CREATOR = new Parcelable.Creator<ParcelableTrack>() {
         @Override
         public ParcelableTrack createFromParcel(Parcel parcel) {
             return new ParcelableTrack(parcel);

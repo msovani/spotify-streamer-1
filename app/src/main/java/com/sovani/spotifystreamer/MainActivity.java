@@ -1,17 +1,17 @@
 package com.sovani.spotifystreamer;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
-    EditText artistName;
-    ArtistFragment artistFragment;
+    private EditText artistName;
+    private ArtistFragment artistFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +49,7 @@ public class MainActivity extends ActionBarActivity {
         outState.putString("SEARCH_TERM", artistName.getText().toString());
     }
 
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
 
-    }
 
     @Override
     protected void onResume()

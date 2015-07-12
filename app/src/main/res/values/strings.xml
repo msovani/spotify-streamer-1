@@ -8,12 +8,11 @@
     <string name="artist_name_placeholder">Type in the name of Artist</string>
     <string name="message_searching">Searching…</string>
     <string name="error_no_albums">No albums found</string>
+    <string name="error_no_network">Network is not available.</string>
 
     <!-- top 10 related -->
     <string name="title_activity_top_ten">Top 10 Tracks</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="error_no_tracks">No tracks found. Please select another artist.</string>
 
 
 

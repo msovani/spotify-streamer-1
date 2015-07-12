@@ -4,30 +4,24 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by msovani on 7/11/15.
+ * This a wrapper class around data elements needed to show Artist information around Artist object.
  */
 public class ParcelableArtist implements Parcelable{
-    private String artistName;
+    private final String artistName;
 
-    private String url;
-    private String id;
+    private final String url;
+    private final String id;
 
     public String getArtistName() {
         return artistName;
     }
 
-    public void setArtistNamee(String artistName) {
-        this.artistName = artistName;
-    }
 
 
     public String getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
 
     public ParcelableArtist(String vName,  String imageurl, String idnumber)
     {
@@ -60,7 +54,7 @@ public class ParcelableArtist implements Parcelable{
         parcel.writeString(id);
     }
 
-    public final Parcelable.Creator<ParcelableArtist> CREATOR = new Parcelable.Creator<ParcelableArtist>() {
+    public static final Parcelable.Creator<ParcelableArtist> CREATOR = new Parcelable.Creator<ParcelableArtist>() {
         @Override
         public ParcelableArtist createFromParcel(Parcel parcel) {
             return new ParcelableArtist(parcel);

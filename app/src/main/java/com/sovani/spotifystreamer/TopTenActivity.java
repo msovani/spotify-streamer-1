@@ -4,11 +4,15 @@ package com.sovani.spotifystreamer;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.sovani.spotifystreamer.model.ParcelableTrack;
 
-public class TopTenActivity extends ActionBarActivity {
+import java.util.ArrayList;
+
+
+public class TopTenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +26,13 @@ public class TopTenActivity extends ActionBarActivity {
             actionBar.setSubtitle(name);
 
         }
-        String spotify_id = this.getIntent().getStringExtra("SPOTIFY_ID");
+        ArrayList<ParcelableTrack> tracks = this.getIntent().getParcelableArrayListExtra("TRACK_LIST");
 
 
         if (savedInstanceState == null) {
             TopTenFragment topTenFragment = new TopTenFragment();
-            if (spotify_id != null) {
-                topTenFragment.setSpotifyID(spotify_id);
+            if (tracks != null) {
+                topTenFragment.setTrackList(tracks);
             }
 
             getSupportFragmentManager().beginTransaction().replace(
@@ -36,8 +40,8 @@ public class TopTenActivity extends ActionBarActivity {
 
         }else{
             TopTenFragment topTenFragment  = (TopTenFragment) getSupportFragmentManager().findFragmentByTag("TOP_TEN_FRAGMENT_TAG");
-            if (spotify_id != null) {
-                topTenFragment.setSpotifyID(spotify_id);
+            if (tracks != null) {
+                topTenFragment.setTrackList(tracks);
             }
         }
 
